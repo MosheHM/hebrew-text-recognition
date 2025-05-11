@@ -1,0 +1,60 @@
+**Epic:** OCR System for Hebrew Handwriting
+
+---
+
+**Story 1: העלאת תמונה (Image Upload)**
+
+*   **As a user**
+*   **I want to** upload a handwritten image to the project
+*   **So that I can** start the OCR process
+*   **Acceptance Criteria:**
+    *   The user can send an image via the UI or API.
+    *   The image is saved using a simple file server service.
+    *   A new project object appears in the database.
+
+---
+
+**Story 2: ביצוע OCR עם Kraken (Perform OCR with Kraken)**
+
+*   **As the system**
+*   **I want to** run OCR on the uploaded image
+*   **So that I can** extract initial text
+*   **Acceptance Criteria:**
+    *   Kraken is activated with a default model.
+    *   The result is saved in the database.
+    *   The result is displayed to the user.
+
+---
+
+**Story 3: פידבק לתוצאה (Feedback for the Result)**
+
+*   **As a user**
+*   **I want to** edit the received text
+*   **So that I can** improve the training results
+*   **Acceptance Criteria:**
+    *   Text can be edited via the UI.
+    *   Each edit is saved as a JSON/ALTO file.
+
+---
+
+**Story 4: אימון מודל אישי (Personal Model Training)**
+
+*   **As the system**
+*   **I want to** train a model based on the feedback
+*   **So that I can** improve accuracy for the specific user
+*   **Acceptance Criteria:**
+    *   Training is performed with Kraken.
+    *   A new model is created and saved with the user's ID.
+
+---
+
+**Story 5: אחזור טקסט עתידי עם מודל אישי (Future Text Retrieval with Personal Model)**
+
+*   **As a user**
+*   **I want** the OCR result to use my personal model
+*   **So that I can** get a more accurate result
+*   **Acceptance Criteria:**
+    *   If the user has a personal model → it is activated.
+    *   If not → the default model is activated.
+
+---

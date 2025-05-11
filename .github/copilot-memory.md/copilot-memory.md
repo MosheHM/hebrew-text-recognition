@@ -17,7 +17,7 @@ Build a backend for an OCR system focused on **Hebrew handwriting**, including *
 - **OCR Engine**: Kraken
 - **Database**: PostgreSQL (via SQLAlchemy)
 - **Task Queue**: Celery + Redis
-- **File Storage**: MinIO/S3-compatible
+- **File Storage**: Simple File Server (local or network storage)
 - **Orchestration**: Docker Compose (local environment)
 
 ---
@@ -33,7 +33,7 @@ app/
 │ └── projects.py # Project management
 ├── services/
 │ ├── kraken_runner.py # Run/train Kraken
-│ ├── storage.py # Upload/download from S3
+│ ├── file_handler.py # Upload/download files to simple file server
 │ └── feedback.py # Handle user corrections
 ├── celery_worker.py # Celery worker init
 └── db.py # DB session handling
@@ -56,7 +56,7 @@ app/
   → Returns the most recent Kraken model for this user.
 
 - `upload_image(image)`  
-  → Stores image in S3 and creates new project entry in DB.
+  → Stores image using the simple file server and creates new project entry in DB.
 
 ---
 
