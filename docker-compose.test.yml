@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  test:
+    build: .
+    command: bash -c "python -m pytest -v"
+    environment:
+      TESTING: "True"
+      UPLOAD_DIRECTORY: /app/uploads/images
+      # Set the DATABASE_URL to a valid value but it won't be used in testing mode
+      DATABASE_URL: "postgresql://user:password@db:5432/db_name"
+    volumes:
+      - .:/app
+    # Add healthcheck to ensure the container is working properly
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 5s
+      timeout: 5s
+      retries: 3

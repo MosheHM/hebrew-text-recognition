@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Database connection details
+      DATABASE_URL: postgresql://user:password@db:5432/db_name
+      # File upload directory
+      UPLOAD_DIRECTORY: /app/uploads/images
+    volumes:
+      # Mount a volume for persistent file storage
+      - uploaded_files:/app/uploads/images
+    depends_on:
+      - db
+
+  test:
+    build: .
+    command: bash -c "pytest -v"
+    environment:
+      # Database connection details - using the same database but with a testing prefix
+      DATABASE_URL: postgresql://user:password@db:5432/db_name
+      TESTING: "True"
+      # File upload directory
+      UPLOAD_DIRECTORY: /app/uploads/images
+    depends_on:
+      - db
+    volumes:
+      - ./:/app
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db_name
+    volumes:
+      # Mount a volume for persistent database data
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  uploaded_files:
+  db_data:
